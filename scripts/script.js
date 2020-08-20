@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const inquirer = require('inquirer');
-const {spawnSync} = require('child_process');
+const { spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const webpack = require('./webpack');
@@ -68,16 +68,6 @@ inquirer
         'Mocha'
       ],
     },
-    // {
-    //   type: 'list',
-    //   name: 'ui',
-    //   message: '4. Are you using a UI framework?',
-    //   choices: [
-    //     'Not now',
-    //     'Bootstrap'
-    //   ],
-    // },
-
     {
       type: 'checkbox', //allows user to select multiple options
       name: 'styling',
@@ -104,9 +94,6 @@ inquirer
           name: 'Not now',
         },
         {
-          name: 'HtmlWebpackPlugin',
-        },
-        {
           name: 'CleanWebpackPlugin',
         },
         {
@@ -126,12 +113,10 @@ inquirer
   ])
   .then((answers) => {  //answers will return an object based on the user's input. We will evaluate the object and determine what to install.
 
-    // generateJson();
+    generateJson();
     let {dependencies, devDependencies} = webpack(answers);
 
-    // console.log(dependencies);
-    // console.log(devDependencies);
-
+    spawnSync('npm', ['init', '-y'], {stdio: 'inherit' });
     spawnSync('npm', dependencies, {stdio: 'inherit' });
     spawnSync('npm', devDependencies, {stdio: 'inherit' });
 
